@@ -9,8 +9,8 @@ const WA_URL =
   "https://wa.me/595983842125?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20un%20turno%20en%20Style%20House.";
 
 const info = [
-  { icon: Clock,   label: "Horarios",  value: "Lun–Sáb: 9:00 – 20:00\nDomingo: 10:00 – 18:00" },
-  { icon: MapPin,  label: "Ubicación", value: "Asunción, Paraguay" },
+  { icon: Clock,   label: "Horarios",  value: "Lun–Sáb: 9:00 – 19:00\nSáb: 10:00 - 18:3 0" },
+  { icon: MapPin,  label: "Ubicación", value: "Nueva Esperanza-Barrio La Victoria, Paraguay" },
   { icon: Phone,   label: "Teléfono",  value: "+595 983 842125" },
   { icon: Mail,    label: "Email",     value: "info@stylehousebarber.com" },
 ];
