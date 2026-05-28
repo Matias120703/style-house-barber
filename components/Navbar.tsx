@@ -50,13 +50,13 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
           >
             <Image
-                src="/logo-stylehouse.png"
-                alt="Style House Barber Shop"
-                width={40}
-                height={40}
-                className="logo-shimmer"
-                priority
-              />
+              src="/logo-stylehouse.png"
+              alt="Style House Barber Shop"
+              width={40}
+              height={40}
+              priority
+              style={{ objectFit: "contain" }}
+            />
             <div className="hidden sm:flex flex-col leading-none">
               <span className="font-display text-white font-700 tracking-[0.18em] uppercase text-sm">
                 Style House
@@ -141,6 +141,7 @@ export default function Navbar() {
               alt="Style House Barber Shop"
               width={80}
               height={80}
+              style={{ objectFit: "contain" }}
             />
             {links.map((l, i) => (
               <motion.button

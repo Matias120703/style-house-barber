@@ -67,13 +67,14 @@ export default function HeroSection() {
             style={{ background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)" }}
           />
           <Image
-              src="/logo-stylehouse.png"
-              alt="Style House Barber Shop"
-              width={260}
-              height={260}
-              className="relative z-10 drop-shadow-2xl opacity-90"
-              priority
-            />
+            src="/logo-stylehouse.png"
+            alt="Style House Barber Shop"
+            width={260}
+            height={260}
+            priority
+            className="relative z-10 drop-shadow-2xl opacity-90"
+            style={{ objectFit: "contain" }}
+          />
         </motion.div>
       </motion.div>
 
