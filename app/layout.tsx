@@ -21,15 +21,15 @@ export const metadata: Metadata = {
     "El destino premium para el hombre moderno en Asunción. Combinamos técnica, precisión y estilo para que siempre luzcas tu mejor versión.",
   keywords: ["barbería", "barbershop", "corte de pelo", "style house", "asunción", "paraguay"],
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: "/logo-stylehouse.png",
+    apple: "/logo-stylehouse.png",
   },
   openGraph: {
     title: "Style House Barber Shop",
     description: "Tu estilo, nuestra pasión.",
     type: "website",
     locale: "es_PY",
-    images: [{ url: "/logo.png" }],
+    images: [{ url: "/logo-stylehouse.png" }],
   },
 };
 

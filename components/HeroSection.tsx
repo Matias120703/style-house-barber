@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { StyleHouseLogo } from "./Logo";
 
 const WA_URL =
   "https://wa.me/595983842125?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20un%20turno%20en%20Style%20House.";
@@ -67,7 +66,14 @@ export default function HeroSection() {
             className="absolute w-80 h-80 rounded-full"
             style={{ background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)" }}
           />
-          <StyleHouseLogo size={260} className="relative z-10 drop-shadow-2xl opacity-90" />
+          <Image
+              src="/logo-stylehouse.png"
+              alt="Style House Barber Shop"
+              width={260}
+              height={260}
+              className="relative z-10 drop-shadow-2xl opacity-90"
+              priority
+            />
         </motion.div>
       </motion.div>
 

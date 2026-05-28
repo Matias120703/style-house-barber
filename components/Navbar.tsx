@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { StyleHouseLogo } from "./Logo";
+import Image from "next/image";
 
 const links = [
   { label: "Inicio",    href: "#inicio" },
@@ -49,7 +49,14 @@ export default function Navbar() {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >
-            <StyleHouseLogo size={40} className="logo-shimmer" />
+            <Image
+                src="/logo-stylehouse.png"
+                alt="Style House Barber Shop"
+                width={40}
+                height={40}
+                className="logo-shimmer"
+                priority
+              />
             <div className="hidden sm:flex flex-col leading-none">
               <span className="font-display text-white font-700 tracking-[0.18em] uppercase text-sm">
                 Style House
@@ -129,7 +136,12 @@ export default function Navbar() {
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-40 glass-dark flex flex-col items-center justify-center gap-10"
           >
-            <StyleHouseLogo size={80} />
+            <Image
+              src="/logo-stylehouse.png"
+              alt="Style House Barber Shop"
+              width={80}
+              height={80}
+            />
             {links.map((l, i) => (
               <motion.button
                 key={l.label}

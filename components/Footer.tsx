@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { StyleHouseLogo } from "./Logo";
+import Image from "next/image";
 
 const WA_URL =
   "https://wa.me/595983842125?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20un%20turno%20en%20Style%20House.";
@@ -30,7 +30,12 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-4 mb-6">
-              <StyleHouseLogo size={52} />
+              <Image
+                src="/logo-stylehouse.png"
+                alt="Style House Barber Shop"
+                width={52}
+                height={52}
+              />
               <div>
                 <div className="font-display text-white font-700 tracking-[0.18em] uppercase text-sm">
                   Style House

@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Calendar, Clock, MapPin, Phone, Mail } from "lucide-react";
-import { StyleHouseLogo } from "./Logo";
+import Image from "next/image";
 
 const WA_URL =
   "https://wa.me/595983842125?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20un%20turno%20en%20Style%20House.";
@@ -102,7 +102,12 @@ export default function BookingSection() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="glass border border-white/7 p-6 flex items-center justify-center"
             >
-              <StyleHouseLogo size={110} />
+              <Image
+                src="/logo-stylehouse.png"
+                alt="Style House Barber Shop"
+                width={110}
+                height={110}
+              />
             </motion.div>
 
             {/* Info cards */}
