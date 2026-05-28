@@ -54,7 +54,7 @@ export default function Footer() {
             <div className="flex gap-3">
               {/* Instagram */}
               <motion.a
-                href="https://instagram.com/stylehousebarber"
+                href="https://www.instagram.com/stylehouse_bs/reels/?hl=es"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"

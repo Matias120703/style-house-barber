@@ -21,7 +21,6 @@ const photos: Photo[] = [
   { id: 5, src: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=700&q=80", alt: "Afeitado de lujo" },
   { id: 6, src: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=700&q=80", alt: "Degradado limpio" },
   { id: 7, src: "https://images.unsplash.com/photo-1615397349754-cfa2066a298e?w=900&q=80", alt: "Interior barbería", wide: true },
-  { id: 8, src: "https://images.unsplash.com/photo-1540396788-3bac8dc77ec8?w=700&q=80", alt: "Ambiente Style House" },
 ];
 
 function PhotoCard({ photo, index, onClick }: { photo: Photo; index: number; onClick: () => void }) {
@@ -193,7 +192,7 @@ export default function GallerySection() {
         >
           <span className="text-white/25 text-[10px] tracking-[0.4em] uppercase mr-3">Seguinos en Instagram</span>
           <a
-            href="https://instagram.com/stylehousebarber"
+            href="https://www.instagram.com/stylehouse_bs/reels/?hl=es"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white/55 text-sm hover:text-white/90 transition-colors underline-anim"
