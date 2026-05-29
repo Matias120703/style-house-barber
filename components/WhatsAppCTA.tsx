@@ -17,7 +17,7 @@ export default function WhatsAppCTA() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="relative py-28 px-6 overflow-hidden">
+    <section ref={ref} className="relative py-16 md:py-28 px-4 md:px-6 overflow-hidden">
       {/* Top / bottom lines */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
       <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />

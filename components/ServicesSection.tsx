@@ -67,66 +67,70 @@ function ServiceCard({ svc, index }: { svc: typeof services[0]; index: number })
       transition={{ duration: 0.65, delay: index * 0.09, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -6, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1], delay: 0 } }}
       whileTap={{ scale: 0.98, transition: { duration: 0.1, delay: 0 } }}
-      className={`relative group p-8 border flex flex-col cursor-pointer block transition-colors duration-500 ${
-        svc.featured
+      className={`relative group flex flex-col cursor-pointer block transition-colors duration-500
+        p-4 md:p-8
+        border
+        ${svc.featured
           ? "border-white/25 glass-bright glow-card hover:border-white/40"
           : "border-white/7 glass hover:border-white/18"
-      }`}
+        }`}
     >
       {/* Featured badge */}
       {svc.featured && (
-        <div className="absolute -top-3 left-8">
-          <span className="bg-white text-[#050505] text-[9px] tracking-[0.35em] uppercase px-3 py-1 font-700">
+        <div className="absolute -top-3 left-4 md:left-8">
+          <span className="bg-white text-[#050505] text-[8px] md:text-[9px] tracking-[0.25em] md:tracking-[0.35em] uppercase px-2 md:px-3 py-1 font-700">
             Más Popular
           </span>
         </div>
       )}
 
       {/* Icon */}
-      <div className={`w-11 h-11 flex items-center justify-center mb-7 transition-all duration-400 ${
-        svc.featured ? "bg-white/10 group-hover:bg-white/16" : "bg-white/4 group-hover:bg-white/10"
-      }`}>
-        <Icon className={`w-5 h-5 transition-colors duration-400 ${
-          svc.featured ? "text-white" : "text-white/50 group-hover:text-white"
-        }`} />
+      <div className={`flex items-center justify-center mb-3 md:mb-7 transition-all duration-400
+        w-8 h-8 md:w-11 md:h-11
+        ${svc.featured ? "bg-white/10 group-hover:bg-white/16" : "bg-white/4 group-hover:bg-white/10"}`}
+      >
+        <Icon className={`w-4 h-4 md:w-5 md:h-5 transition-colors duration-400
+          ${svc.featured ? "text-white" : "text-white/50 group-hover:text-white"}`}
+        />
       </div>
 
       {/* Name */}
-      <h3 className={`font-display text-xl font-700 mb-3 tracking-wide transition-colors duration-300 ${
-        svc.featured ? "text-white" : "text-white/85 group-hover:text-white"
-      }`}>
+      <h3 className={`font-display font-700 tracking-wide transition-colors duration-300 leading-tight
+        text-sm md:text-xl mb-2 md:mb-3
+        ${svc.featured ? "text-white" : "text-white/85 group-hover:text-white"}`}
+      >
         {svc.name}
       </h3>
 
-      {/* Description */}
-      <p className="text-white/38 text-sm leading-relaxed mb-7 group-hover:text-white/50 transition-colors duration-300">
+      {/* Description — hidden on mobile to keep 2-col cards compact */}
+      <p className="hidden md:block text-white/38 text-sm leading-relaxed mb-7 group-hover:text-white/50 transition-colors duration-300">
         {svc.description}
       </p>
 
       {/* Divider */}
-      <div className="hr-luxury mb-7 mt-auto" />
+      <div className="hr-luxury mt-auto mb-3 md:mb-7" />
 
       {/* Price & duration */}
       <div className="flex items-end justify-between">
         <div>
-          <div className={`font-display text-2xl font-700 ${
-            svc.featured ? "text-white" : "gradient-text"
-          }`}>
+          <div className={`font-display font-700 text-base md:text-2xl
+            ${svc.featured ? "text-white" : "gradient-text"}`}
+          >
             {svc.price}
           </div>
-          <div className="text-[10px] tracking-[0.2em] uppercase text-white/30 mt-1">
+          <div className="text-[9px] md:text-[10px] tracking-[0.15em] md:tracking-[0.2em] uppercase text-white/30 mt-0.5 md:mt-1">
             {svc.duration}
           </div>
         </div>
 
-        {/* Reservar — styled span, card itself is the <a> */}
-        <span className={`text-[10px] tracking-[0.2em] uppercase flex items-center gap-1.5 transition-colors duration-300 ${
-          svc.featured
+        <span className={`flex items-center gap-1 md:gap-1.5 transition-colors duration-300
+          text-[9px] md:text-[10px] tracking-[0.15em] md:tracking-[0.2em] uppercase
+          ${svc.featured
             ? "text-white group-hover:text-white/80"
-            : "text-white/35 group-hover:text-white/80"
-        }`}>
-          Reservar
-          <span className="text-sm inline-block transition-transform duration-300 group-hover:translate-x-1">
+            : "text-white/35 group-hover:text-white/80"}`}
+        >
+          <span className="hidden sm:inline">Reservar</span>
+          <span className="text-xs md:text-sm inline-block transition-transform duration-300 group-hover:translate-x-1">
             →
           </span>
         </span>
@@ -146,7 +150,7 @@ export default function ServicesSection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="servicios" ref={ref} className="relative py-32 px-6 overflow-hidden">
+    <section id="servicios" ref={ref} className="relative py-16 md:py-32 px-4 md:px-6 overflow-hidden">
       {/* Bg */}
       <div className="absolute inset-0 grid-bg opacity-18" />
       <div
@@ -160,7 +164,7 @@ export default function ServicesSection() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="mb-20"
+          className="mb-10 md:mb-20"
         >
           <div className="flex items-center gap-4 mb-5">
             <div className="section-line" />
@@ -179,23 +183,44 @@ export default function ServicesSection() {
           </div>
         </motion.div>
 
-        {/* Cards — first 3 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/4 mb-px">
-          {services.slice(0, 3).map((svc, i) => (
-            <div key={svc.name} className="bg-[#050505]">
+        {/* ── MOBILE grid (md:hidden) ──
+            All 5 cards in a 2-col grid.
+            The featured card spans both columns (col-span-2).
+            Layout result:
+              [Corte+Diseño] [Corte+Barba]
+              [Corte+Pelo]   [Corte+Cejas]
+              [    Corte + Barba + Cejas   ] */}
+        <div className="md:hidden grid grid-cols-2 gap-px bg-white/4">
+          {services.map((svc, i) => (
+            <div
+              key={`m-${svc.name}`}
+              className={`bg-[#050505] ${svc.featured ? "col-span-2" : ""}`}
+            >
               <ServiceCard svc={svc} index={i} />
             </div>
           ))}
         </div>
 
-        {/* Cards — last 2, centered */}
-        <div className="bg-white/4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px max-w-2xl mx-auto lg:max-w-none lg:flex lg:justify-center">
-            {services.slice(3).map((svc, i) => (
-              <div key={svc.name} className="bg-[#050505] lg:w-1/3">
-                <ServiceCard svc={svc} index={i + 3} />
+        {/* ── DESKTOP grid (hidden md:block) — untouched from original ── */}
+        <div className="hidden md:block">
+          {/* Cards — first 3 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/4 mb-px">
+            {services.slice(0, 3).map((svc, i) => (
+              <div key={svc.name} className="bg-[#050505]">
+                <ServiceCard svc={svc} index={i} />
               </div>
             ))}
+          </div>
+
+          {/* Cards — last 2, centered */}
+          <div className="bg-white/4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-px max-w-2xl mx-auto lg:max-w-none lg:flex lg:justify-center">
+              {services.slice(3).map((svc, i) => (
+                <div key={svc.name} className="bg-[#050505] lg:w-1/3">
+                  <ServiceCard svc={svc} index={i + 3} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -205,7 +230,7 @@ export default function ServicesSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="mt-14 text-center text-[10px] tracking-[0.3em] uppercase text-white/20"
+          className="mt-10 md:mt-14 text-center text-[10px] tracking-[0.3em] uppercase text-white/20"
         >
           Todos los servicios incluyen atención personalizada y productos premium
         </motion.p>

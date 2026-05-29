@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
@@ -11,9 +11,20 @@ export default function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
 
-  const yBg      = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const opText   = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const yText    = useTransform(scrollYProgress, [0, 0.6], ["0%", "-12%"]);
+  const yBg    = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const opText = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const yText  = useTransform(scrollYProgress, [0, 0.6], ["0%", "-12%"]);
+
+  // Disable scroll-parallax on the text panel for mobile — the section is
+  // taller than one viewport on mobile and opText would fade the text before
+  // the user ever scrolls to it.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check, { passive: true });
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const scrollTo = (id: string) => {
     const el = document.querySelector(id);
@@ -24,15 +35,20 @@ export default function HeroSection() {
     <section
       id="inicio"
       ref={ref}
-      className="relative min-h-screen flex items-center overflow-hidden"
+      // md:min-h-screen keeps desktop exactly as before.
+      // On mobile the section grows with content so the text panel
+      // naturally sits below the first screen.
+      className="relative md:min-h-screen flex items-start md:items-center overflow-hidden"
     >
-      {/* ── Background absolute grid ── */}
+      {/* ── Background grid ── */}
       <div className="absolute inset-0 grid-bg opacity-30 z-0" />
 
       {/* ── RIGHT — cinematic photo + logo overlay ── */}
+      {/* min-h-screen guarantees the photo always covers the full first screen
+          on mobile even though the section itself is taller. */}
       <motion.div
         style={{ y: yBg }}
-        className="absolute top-0 right-0 w-full md:w-[55%] h-full z-0"
+        className="absolute top-0 right-0 w-full md:w-[55%] min-h-screen h-full z-0"
       >
         {/* Photo */}
         <div className="absolute inset-0">
@@ -47,11 +63,8 @@ export default function HeroSection() {
         </div>
 
         {/* Gradient masks */}
-        {/* Left fade (merges into left panel) */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/70 to-transparent" />
-        {/* Top vignette */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/60 via-transparent to-[#050505]/50" />
-        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40" />
 
         {/* ── Centered logo overlay ── */}
@@ -61,35 +74,74 @@ export default function HeroSection() {
           transition={{ duration: 1.2, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="absolute inset-0 flex items-center justify-center"
         >
-          {/* Glow behind logo */}
-          <div
-            className="absolute w-80 h-80 rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)" }}
-          />
-          <Image
-            src="/logo-stylehouse.png"
-            alt="Style House Barber Shop"
-            width={260}
-            height={260}
-            priority
-            className="relative z-10 drop-shadow-2xl opacity-90"
-            style={{ objectFit: "contain" }}
-          />
+          {/* Wrapper shifts logo + glow up on mobile, neutral on desktop */}
+          <div className="relative flex items-center justify-center -translate-y-[15vh] md:translate-y-0">
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full"
+              style={{ background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)" }}
+            />
+            <Image
+              src="/logo-stylehouse.png"
+              alt="Style House Barber Shop"
+              width={260}
+              height={260}
+              priority
+              className="relative z-10 drop-shadow-2xl opacity-90"
+              style={{ objectFit: "contain" }}
+            />
+          </div>
         </motion.div>
       </motion.div>
 
-      {/* ── LEFT — text content ── */}
-      <motion.div
-        style={{ opacity: opText, y: yText }}
-        className="relative z-10 w-full md:w-[52%] px-6 md:px-16 lg:px-24 pt-28 pb-20 flex flex-col justify-center min-h-screen"
-      >
+      {/* ── Mobile only: first-screen branding overlay ── */}
+      {/* Sits above the photo for the first viewport height, then ends.
+          Contains the label at top and a scroll hint at bottom. */}
+      <div className="md:hidden absolute top-0 inset-x-0 h-screen z-20 pointer-events-none flex flex-col justify-between py-24">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="flex items-center justify-center gap-3 px-6"
+        >
+          <div className="h-px w-8 bg-white/25" />
+          <span className="text-[7px] tracking-[0.45em] uppercase text-white/45">
+            Premium Barbershop · Paraguay
+          </span>
+          <div className="h-px w-8 bg-white/25" />
+        </motion.div>
 
-        {/* Label */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+          className="flex flex-col items-center gap-2"
+        >
+          <span className="text-[7px] tracking-[0.5em] uppercase text-white/30">Deslizar</span>
+          <motion.div
+            animate={{ y: [0, 7, 0] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+            className="w-px h-8 bg-gradient-to-b from-white/35 to-transparent"
+          />
+        </motion.div>
+      </div>
+
+      {/* ── Text content ──
+          Mobile:  pt-[100vh] pushes the block below the logo first-screen.
+                   No parallax style (isMobile) so opacity stays 1 as user scrolls.
+          Desktop: pt-28 / justify-center / min-h-screen exactly as before. */}
+      <motion.div
+        style={isMobile ? {} : { opacity: opText, y: yText }}
+        className="relative z-10 w-full md:w-[52%]
+                   pt-[100vh] px-5 pb-16
+                   md:pt-28 md:pb-20 md:px-16 lg:px-24
+                   flex flex-col md:justify-center md:min-h-screen"
+      >
+        {/* Label — desktop only; mobile version is in the first-screen overlay */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex items-center gap-3 mb-10"
+          className="hidden md:flex items-center gap-3 mb-10"
         >
           <div className="section-line" />
           <span className="text-[9px] tracking-[0.5em] uppercase text-white/40">
@@ -97,23 +149,23 @@ export default function HeroSection() {
           </span>
         </motion.div>
 
-        {/* Headline */}
+        {/* Headline — smaller clamp on mobile so it doesn't crowd the block */}
         <div className="overflow-hidden mb-2">
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-[clamp(52px,8vw,96px)] font-900 leading-[0.92] tracking-[-0.03em] text-white"
+            className="font-display text-[clamp(38px,10vw,48px)] md:text-[clamp(52px,8vw,96px)] font-900 leading-[0.92] tracking-[-0.03em] text-white"
           >
             Tu estilo,
           </motion.h1>
         </div>
-        <div className="overflow-hidden mb-8">
+        <div className="overflow-hidden mb-6 md:mb-8">
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, delay: 0.58, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-[clamp(52px,8vw,96px)] font-900 leading-[0.92] tracking-[-0.03em] gradient-text"
+            className="font-display text-[clamp(38px,10vw,48px)] md:text-[clamp(52px,8vw,96px)] font-900 leading-[0.92] tracking-[-0.03em] gradient-text"
           >
             nuestra pasión.
           </motion.h1>
@@ -125,7 +177,7 @@ export default function HeroSection() {
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
           style={{ transformOrigin: "left" }}
-          className="h-px bg-gradient-to-r from-white/30 to-transparent w-48 mb-8"
+          className="h-px bg-gradient-to-r from-white/30 to-transparent w-48 mb-6 md:mb-8"
         />
 
         {/* Subtitle */}
@@ -133,7 +185,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.9 }}
-          className="text-white/45 text-sm md:text-base leading-[1.8] tracking-wide max-w-md mb-12"
+          className="text-white/45 text-sm md:text-base leading-[1.8] tracking-wide max-w-md mb-8 md:mb-12"
         >
           En Style House Barber Shop combinamos técnica, precisión y estilo
           para que siempre luzcas tu mejor versión.
@@ -170,12 +222,12 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.3 }}
-          className="flex gap-10 mt-16 pt-10 border-t border-white/6"
+          className="flex gap-6 md:gap-10 mt-12 md:mt-16 pt-8 md:pt-10 border-t border-white/6"
         >
           {[
-            { value: "8+",   label: "Años de experiencia" },
-            { value: "3K+",  label: "Clientes atendidos"  },
-            { value: "5★",   label: "Calificación"        },
+            { value: "8+",  label: "Años de experiencia" },
+            { value: "3K+", label: "Clientes atendidos"  },
+            { value: "5★",  label: "Calificación"        },
           ].map(s => (
             <div key={s.label}>
               <div className="font-display text-2xl font-700 text-white">{s.value}</div>
@@ -185,12 +237,12 @@ export default function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* ── Scroll indicator ── */}
+      {/* ── Desktop-only scroll indicator ── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-2"
       >
         <span className="text-[8px] tracking-[0.5em] uppercase text-white/25">Scroll</span>
         <motion.div

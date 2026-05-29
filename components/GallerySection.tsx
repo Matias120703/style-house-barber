@@ -140,7 +140,7 @@ export default function GallerySection() {
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   return (
-    <section id="galeria" ref={ref} className="relative py-32 px-6 overflow-hidden">
+    <section id="galeria" ref={ref} className="relative py-16 md:py-32 px-4 md:px-6 overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: "radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255,255,255,0.02) 0%, transparent 55%)" }}
@@ -152,7 +152,7 @@ export default function GallerySection() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="mb-16"
+          className="mb-10 md:mb-16"
         >
           <div className="flex items-center gap-4 mb-5">
             <div className="section-line" />

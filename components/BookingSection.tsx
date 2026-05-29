@@ -20,7 +20,7 @@ export default function BookingSection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="reservas" ref={ref} className="relative py-32 px-6 overflow-hidden">
+    <section id="reservas" ref={ref} className="relative py-20 md:py-32 px-4 md:px-6 overflow-hidden">
       {/* BG */}
       <div className="absolute inset-0 grid-bg opacity-18" />
       <div
@@ -35,7 +35,7 @@ export default function BookingSection() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="mb-20 text-center"
+          className="mb-12 md:mb-20 text-center"
         >
           <div className="flex items-center justify-center gap-4 mb-5">
             <div className="section-line" />
@@ -83,7 +83,7 @@ export default function BookingSection() {
                 frameBorder="0"
                 scrolling="yes"
                 title="Style House Barber Shop — Reservar turno"
-                className="w-full block"
+                className="w-full block h-[480px] md:h-[600px]"
               />
             </div>
           </motion.div>
